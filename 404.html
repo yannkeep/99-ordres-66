@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDRE 66 — ULTIMATUM AUX MANDATAIRES | GAME OVER — PARTY ON</title>
+    <meta name="description" content="Ultimatum aux mandataires politiques belges. Mort de l'Arizona. Renaissance 3.0. Contre-institution citoyenne Ouaisfieu.">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rouge: #D32F2F;
+            --bleu: #2B59C3;
+            --matrix: #00ff41;
+            --noir: #0a0a0a;
+            --terminal: #0d1117;
+            --blanc: #e6e6e6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--noir);
+            color: var(--matrix);
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.02) 2px, rgba(0,255,65,0.02) 4px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes pulse { 0%,100%{text-shadow:0 0 10px var(--rouge)} 50%{text-shadow:0 0 30px var(--rouge),0 0 50px var(--rouge)} }
+        @keyframes glow { 0%,100%{text-shadow:0 0 10px var(--matrix)} 50%{text-shadow:0 0 20px var(--matrix),0 0 40px var(--matrix)} }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            border-bottom: 4px solid var(--rouge);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--rouge) 50%, var(--bleu) 50%);
+        }
+
+        .transmission {
+            font-size: 0.85rem;
+            letter-spacing: 0.4em;
+            color: var(--rouge);
+            animation: blink 1s infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .ordre-numero {
+            font-size: clamp(6rem, 20vw, 16rem);
+            font-weight: 700;
+            line-height: 0.85;
+            color: var(--rouge);
+            animation: pulse 2s infinite;
+        }
+
+        .ordre-sous {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--blanc);
+            margin: 1rem 0;
+            letter-spacing: 0.2em;
+        }
+
+        .game-over {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-top: 2rem;
+        }
+
+        .game-over .go { color: var(--rouge); text-decoration: line-through; }
+        .game-over .po { color: var(--matrix); animation: glow 2s infinite; }
+
+        .date { font-size: 0.9rem; color: var(--bleu); margin-top: 1.5rem; letter-spacing: 0.15em; padding: 0.5rem 1.5rem; border: 1px solid var(--bleu); }
+
+        /* TERMINAL */
+        .terminal {
+            background: var(--terminal);
+            border: 2px solid var(--matrix);
+            max-width: 1000px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .terminal::before, .terminal::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+
+        .terminal::before { top: -2px; left: -2px; border-top: 4px solid var(--rouge); border-left: 4px solid var(--rouge); }
+        .terminal::after { top: -2px; right: -2px; border-top: 4px solid var(--bleu); border-right: 4px solid var(--bleu); }
+
+        .terminal-bl, .terminal-br {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: -2px;
+        }
+
+        .terminal-bl { left: -2px; border-bottom: 4px solid var(--bleu); border-left: 4px solid var(--bleu); }
+        .terminal-br { right: -2px; border-bottom: 4px solid var(--rouge); border-right: 4px solid var(--rouge); }
+
+        .terminal-header {
+            background: var(--noir);
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--matrix);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-dots { display: flex; gap: 0.4rem; }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .terminal-dot.r { background: var(--rouge); }
+        .terminal-dot.y { background: #f5a623; }
+        .terminal-dot.g { background: var(--matrix); }
+
+        .terminal-title { font-size: 0.8rem; color: var(--matrix); letter-spacing: 0.1em; }
+
+        .terminal-body { padding: 1.5rem; }
+
+        .terminal h2 {
+            font-size: 1.3rem;
+            color: var(--rouge);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--rouge);
+        }
+
+        .terminal h2::before { content: '> '; color: var(--matrix); }
+
+        /* CIBLES GRID */
+        .cibles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .cible-bloc {
+            background: rgba(0,255,65,0.03);
+            border: 1px solid var(--matrix);
+            padding: 1rem;
+        }
+
+        .cible-niveau {
+            font-size: 0.7rem;
+            color: var(--rouge);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .cible-liste {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--blanc);
+        }
+
+        .cible-liste li {
+            padding: 0.3rem 0 0.3rem 1.2rem;
+            position: relative;
+        }
+
+        .cible-liste li::before {
+            content: '█';
+            position: absolute;
+            left: 0;
+            color: var(--matrix);
+            font-size: 0.6rem;
+        }
+
+        /* CHIFFRES */
+        .chiffres-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .chiffre-card {
+            text-align: center;
+            padding: 1.25rem;
+            border: 1px solid var(--matrix);
+            background: rgba(0,255,65,0.02);
+        }
+
+        .chiffre-nombre {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--rouge);
+            text-shadow: 0 0 10px var(--rouge);
+        }
+
+        .chiffre-label {
+            font-size: 0.8rem;
+            color: var(--blanc);
+            margin-top: 0.5rem;
+        }
+
+        /* CRIMES */
+        .crime-item {
+            margin-bottom: 1.25rem;
+            padding: 1rem;
+            border-left: 3px solid var(--rouge);
+            background: rgba(211,47,47,0.08);
+        }
+
+        .crime-titre {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--rouge);
+            margin-bottom: 0.4rem;
+        }
+
+        .crime-desc {
+            font-size: 0.9rem;
+            color: var(--blanc);
+        }
+
+        /* ARMES */
+        .arme-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--matrix);
+            background: rgba(0,255,65,0.03);
+        }
+
+        .arme-icone { font-size: 1.5rem; min-width: 40px; text-align: center; }
+
+        .arme-texte h3 { font-size: 1rem; color: var(--matrix); margin-bottom: 0.3rem; }
+        .arme-texte p { font-size: 0.85rem; color: var(--blanc); }
+
+        .note-manif {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--matrix);
+            background: rgba(0,255,65,0.05);
+            font-size: 0.9rem;
+            color: var(--blanc);
+        }
+
+        .note-manif strong { color: var(--matrix); }
+
+        /* ULTIMATUM */
+        .ultimatum {
+            background: var(--rouge);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .ultimatum h2 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .exigences {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .exigence {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding: 1.25rem;
+            background: rgba(0,0,0,0.4);
+            border-left: 4px solid var(--matrix);
+        }
+
+        .exigence-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--matrix);
+            min-width: 45px;
+        }
+
+        .exigence-texte { color: white; font-size: 0.95rem; }
+        .exigence-texte strong { color: var(--matrix); }
+
+        .deadline {
+            margin-top: 3rem;
+            padding: 2rem;
+            border: 3px solid white;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .deadline h3 { font-size: 1.3rem; color: var(--matrix); margin-bottom: 1rem; }
+        .deadline p { color: white; font-size: 1rem; }
+
+        /* RENAISSANCE */
+        .renaissance {
+            background: linear-gradient(180deg, var(--noir) 0%, #051005 100%);
+            padding: 4rem 2rem;
+        }
+
+        .renaissance h2 {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: var(--matrix);
+            text-shadow: 0 0 20px var(--matrix);
+            margin-bottom: 2rem;
+        }
+
+        .renaissance-intro {
+            text-align: center;
+            color: var(--blanc);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1rem;
+        }
+
+        .renaissance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .renaissance-item {
+            background: rgba(0,255,65,0.03);
+            border: 1px solid var(--matrix);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .renaissance-item h3 { color: var(--matrix); font-size: 1rem; margin-bottom: 0.5rem; }
+        .renaissance-item p { font-size: 0.85rem; color: var(--blanc); }
+
+        /* SIGNATURE */
+        .signature {
+            background: var(--noir);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 4px solid var(--rouge);
+        }
+
+        .manifeste {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 2rem;
+            border: 2px solid var(--matrix);
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--blanc);
+        }
+
+        .manifeste p { margin-bottom: 1rem; }
+        .manifeste strong { color: var(--matrix); }
+
+        .final-msg {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .final-msg .dead { color: var(--rouge); text-decoration: line-through; }
+        .final-msg .alive { color: var(--matrix); text-shadow: 0 0 15px var(--matrix); }
+
+        .hashtags { color: var(--bleu); font-size: 0.9rem; margin-top: 1.5rem; }
+
+        /* FOOTER */
+        .footer {
+            background: var(--terminal);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.75rem;
+            border-top: 2px solid var(--matrix);
+        }
+
+        .footer-left { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-item { display: flex; gap: 0.4rem; }
+        .footer-label { color: #555; }
+        .footer-value { color: var(--rouge); font-weight: 600; }
+        .footer-logo { font-style: italic; font-weight: 600; font-size: 1rem; color: var(--matrix); }
+
+        @media (max-width: 600px) {
+            .exigence, .arme-item { flex-direction: column; gap: 0.5rem; }
+            .exigence-num, .arme-icone { min-width: auto; }
+            .footer { flex-direction: column; text-align: center; }
+            .footer-left { flex-direction: column; gap: 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+
+<!-- HERO -->
+<section class="hero">
+    <div class="transmission">/// TRANSMISSION PRIORITAIRE — NIVEAU ALPHA ///</div>
+    <div class="ordre-numero">66</div>
+    <div class="ordre-sous">ORDRE D'EXÉCUTION — ULTIMATUM AUX MANDATAIRES</div>
+    <div class="game-over">
+        <span class="go">GAME OVER</span> — <span class="po">PARTY ON</span>
+    </div>
+    <div class="date">BELGIQUE — FÉVRIER 2026 — POINT DE NON-RETOUR</div>
+</section>
+
+<!-- CIBLES -->
+<section style="padding: 2rem;">
+    <div class="terminal">
+        <span class="terminal-bl"></span>
+        <span class="terminal-br"></span>
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span class="terminal-dot r"></span>
+                <span class="terminal-dot y"></span>
+                <span class="terminal-dot g"></span>
+            </div>
+            <span class="terminal-title">root@ouaisfieu:~$ ./identifier_cibles.sh --all</span>
+        </div>
+        <div class="terminal-body">
+            <h2>VOUS ÊTES IDENTIFIÉS</h2>
+            <p style="color: var(--blanc); margin-bottom: 1.5rem;">
+                Cet ultimatum s'adresse à <strong style="color: var(--rouge);">TOUS LES MANDATAIRES</strong> 
+                qui ont participé, soutenu ou laissé faire le démantèlement du modèle social belge. 
+                <strong style="color: var(--rouge);">Aucun échelon n'est épargné.</strong>
+            </p>
+            <div class="cibles-grid">
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// FÉDÉRAL</div>
+                    <ul class="cible-liste">
+                        <li>Premier Ministre & cabinet Arizona</li>
+                        <li>Ministres & secrétaires d'État</li>
+                        <li>150 députés fédéraux</li>
+                        <li>60 sénateurs</li>
+                        <li>Chefs de cabinet & conseillers</li>
+                    </ul>
+                </div>
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// RÉGIONAL / COMMUNAUTAIRE</div>
+                    <ul class="cible-liste">
+                        <li>Ministres-Présidents FWB, Wallonie, Bruxelles</li>
+                        <li>Gouvernements régionaux</li>
+                        <li>Parlementaires régionaux</li>
+                        <li>Cabinets ministériels</li>
+                    </ul>
+                </div>
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// PROVINCIAL</div>
+                    <ul class="cible-liste">
+                        <li>Gouverneurs de province</li>
+                        <li>Députés provinciaux</li>
+                        <li>Conseillers provinciaux</li>
+                        <li>Directeurs généraux</li>
+                    </ul>
+                </div>
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// COMMUNAL</div>
+                    <ul class="cible-liste">
+                        <li>589 bourgmestres</li>
+                        <li>~3.500 échevins</li>
+                        <li>Présidents de CPAS</li>
+                        <li>Conseillers communaux</li>
+                    </ul>
+                </div>
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// INTERCOMMUNALES & SATELLITES</div>
+                    <ul class="cible-liste">
+                        <li>Présidents d'intercommunales</li>
+                        <li>Administrateurs délégués</li>
+                        <li>Membres des CA opaques</li>
+                        <li>Consultants & bureaux d'études</li>
+                        <li>ASBL satellites</li>
+                    </ul>
+                </div>
+                <div class="cible-bloc">
+                    <div class="cible-niveau">// LES CUMULARDS</div>
+                    <ul class="cible-liste">
+                        <li>Multi-mandataires professionnels</li>
+                        <li>Jetons de présence empilés</li>
+                        <li>Pantoufleurs public-privé</li>
+                        <li>Conflits d'intérêts permanents</li>
+                        <li>Émargeurs de l'ombre</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; padding: 1rem; border: 2px solid var(--rouge); text-align: center;">
+                <p style="color: var(--rouge); font-weight: 700;">
+                    ⚠️ VOUS PENSIEZ QUE PERSONNE NE COMPTAIT ?<br>
+                    NOUS AVONS LES NOMS. LES CHIFFRES. LES PREUVES.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DOSSIER CHIFFRES -->
+<section style="padding: 2rem;">
+    <div class="terminal">
+        <span class="terminal-bl"></span>
+        <span class="terminal-br"></span>
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span class="terminal-dot r"></span>
+                <span class="terminal-dot y"></span>
+                <span class="terminal-dot g"></span>
+            </div>
+            <span class="terminal-title">root@ouaisfieu:~$ cat /dossier/arizona_impact.log</span>
+        </div>
+        <div class="terminal-body">
+            <h2>LE DOSSIER — CE QUE VOUS AVEZ FAIT</h2>
+            <div class="chiffres-grid">
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">90.000</div>
+                    <div class="chiffre-label">exclusions chômage programmées d'ici 2027</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">30.122</div>
+                    <div class="chiffre-label">familles vers le RIS dès 2026</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">80 M€</div>
+                    <div class="chiffre-label">surcoût CPAS bruxellois sans compensation</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">9,2 Mds€</div>
+                    <div class="chiffre-label">d'austérité Arizona sur les précaires</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">978.000</div>
+                    <div class="chiffre-label">personnes en inactivité CONTRAINTE</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">1 M€/H</div>
+                    <div class="chiffre-label">coût de l'inactivité forcée (21-24 Mds€/an)</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">17 Mds€</div>
+                    <div class="chiffre-label">taxe patrimoine REFUSÉE</div>
+                </div>
+                <div class="chiffre-card">
+                    <div class="chiffre-nombre">30 Mds€</div>
+                    <div class="chiffre-label">fraude fiscale annuelle IGNORÉE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CRIMES -->
+<section style="padding: 2rem;">
+    <div class="terminal">
+        <span class="terminal-bl"></span>
+        <span class="terminal-br"></span>
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span class="terminal-dot r"></span>
+                <span class="terminal-dot y"></span>
+                <span class="terminal-dot g"></span>
+            </div>
+            <span class="terminal-title">root@ouaisfieu:~$ ./analyser_crimes.sh --verbose</span>
+        </div>
+        <div class="terminal-body">
+            <h2>VOS CRIMES CONTRE LE PEUPLE BELGE</h2>
+
+            <div class="crime-item">
+                <div class="crime-titre">01. TRAHISON CONSTITUTIONNELLE</div>
+                <div class="crime-desc">Article 42 : les parlementaires représentent la Nation, pas les partis. Vous avez transformé cette liberté en fiction. La PARTICRATIE a confisqué la souveraineté nationale. Vous êtes des soldats de parti, pas des représentants du peuple.</div>
+            </div>
+
+            <div class="crime-item">
+                <div class="crime-titre">02. DESTRUCTION DU CONTRAT SOCIAL DE 1944</div>
+                <div class="crime-desc">Le modèle social belge — fruit du pacte entre Capital et Travail forgé par les résistants — vous l'avez démantelé méthodiquement. Fin du chômage illimité, rationnement santé, sanctions des malades. Ce n'est pas de l'austérité, c'est une guerre de classe.</div>
+            </div>
+
+            <div class="crime-item">
+                <div class="crime-titre">03. TRANSFERT DES RISQUES SUR LES FAIBLES</div>
+                <div class="crime-desc">Vous avez transféré les risques sociaux de l'État fédéral vers les communes et les individus. Les CPAS explosent. Les communes s'endettent. Les précaires coulent. Pendant que vous protégez le capital et la fraude fiscale.</div>
+            </div>
+
+            <div class="crime-item">
+                <div class="crime-titre">04. OPACITÉ SYSTÉMIQUE & CUMUL</div>
+                <div class="crime-desc">Intercommunales opaques, jetons de présence cumulés, pantouflage, conflits d'intérêts non-déclarés. Vous avez construit un système de prédation légalisée à tous les échelons. La transparence vous terrorise parce qu'elle révèle vos privilèges.</div>
+            </div>
+
+            <div class="crime-item">
+                <div class="crime-titre">05. MÉPRIS TOTAL DE LA DÉMOCRATIE</div>
+                <div class="crime-desc">Les manifestations ne changent rien en Belgique — vous le savez et vous en jouissez. La particratie absorbe la contestation sans broncher. Vous avez transformé la démocratie en spectacle où le peuple n'est qu'un figurant.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ARMES -->
+<section style="padding: 2rem;">
+    <div class="terminal">
+        <span class="terminal-bl"></span>
+        <span class="terminal-br"></span>
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span class="terminal-dot r"></span>
+                <span class="terminal-dot y"></span>
+                <span class="terminal-dot g"></span>
+            </div>
+            <span class="terminal-title">root@ouaisfieu:~$ ./deployer_arsenal.sh --mode=EXECUTION</span>
+        </div>
+        <div class="terminal-body">
+            <h2>NOS ARMES — CE QUI VA VOUS DÉTRUIRE</h2>
+
+            <div class="note-manif">
+                <strong>⚠️ NOTE :</strong> Nous ne descendons pas dans la rue. Les manifestations ne servent à RIEN en Belgique. 
+                Nos armes sont <strong>juridiques, institutionnelles et structurelles</strong>. Elles sont déjà déployées.
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">⚖️</span>
+                <div class="arme-texte">
+                    <h3>SATURATION JUDICIAIRE</h3>
+                    <p>Chaque exclusion contestée devant les tribunaux du travail. 10.000 recours = système qui craque. Vous serez noyés sous la preuve documentée de votre échec systémique.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">🏛️</span>
+                <div class="arme-texte">
+                    <h3>COUR CONSTITUTIONNELLE — ARTICLE 23</h3>
+                    <p>Principe de standstill. Recours introduit le 29/10/2025. Arrêt attendu fin 2026. Si annulation = indemnisation rétroactive + chaos budgétaire. L'épée de Damoclès est suspendue au-dessus de vos têtes.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">💥</span>
+                <div class="arme-texte">
+                    <h3>IMPLOSION DES CPAS</h3>
+                    <p>Les communes sont votre maillon faible. 80M€ surcoût Bruxelles, 240 ETP manquants, délai 30 jours intenable. Quand les CPAS craquent publiquement, les bourgmestres de TOUS les partis deviennent nos alliés objectifs.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">🎯</span>
+                <div class="arme-texte">
+                    <h3>CIBLAGE INDIVIDUEL DES DÉPUTÉS</h3>
+                    <p>Nous connaissons chaque député Vooruit et Engagé des circonscriptions populaires. Nous avons les chiffres de LEUR commune. Nous les mettrons face à LEURS électeurs. 3-5 voix qui basculent = votre majorité s'effondre.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">🔓</span>
+                <div class="arme-texte">
+                    <h3>NÉGOCIATION DANS LES PILIERS</h3>
+                    <p>FGTB, CSC, CGSLB = 1,5 million de membres. Les syndicats négocient EN COULISSES, pas dans la rue. Mutuelles, corps intermédiaires. Le vrai pouvoir est là, et il commence à douter de vous.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">💡</span>
+                <div class="arme-texte">
+                    <h3>ÉCONOMIE CONTRIBUTIVE PROVISIONNÉE</h3>
+                    <p>24.000€ pour prouver qu'on peut transformer 21-24 Mds€ de dépenses passives en investissement actif. Ruling fiscal SDA en cours. Quand l'alternative est crédible, votre austérité devient illégitime.</p>
+                </div>
+            </div>
+
+            <div class="arme-item">
+                <span class="arme-icone">🏗️</span>
+                <div class="arme-texte">
+                    <h3>CONTRE-INSTITUTION OPÉRATIONNELLE</h3>
+                    <p>Nous construisons l'infrastructure du monde d'après : veille citoyenne, intelligence civile, outils souverains (Solid, Decidim), documentation open source. Quand notre système est opérationnel, le vôtre devient OBSOLÈTE.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ULTIMATUM -->
+<section class="ultimatum">
+    <h2>⚡ L'ULTIMATUM ⚡</h2>
+    <div class="exigences">
+        <div class="exigence">
+            <span class="exigence-num">I</span>
+            <p class="exigence-texte"><strong>MORT DE L'ARIZONA</strong> — Ce gouvernement qui a trahi le contrat social de 1944 doit tomber. Par le vote, par la Cour Constitutionnelle, par l'implosion interne. Peu importe le moyen.</p>
+        </div>
+        <div class="exigence">
+            <span class="exigence-num">II</span>
+            <p class="exigence-texte"><strong>RÉTABLISSEMENT DE L'EXCEPTION BELGE</strong> — Les allocations de chômage illimitées dans le temps. Le filet de sécurité qui empêche le basculement dans la grande pauvreté. Non-négociable.</p>
+        </div>
+        <div class="exigence">
+            <span class="exigence-num">III</span>
+            <p class="exigence-texte"><strong>JUSTICE FISCALE</strong> — Taxe sur les patrimoines &gt;1M€. Lutte effective contre la fraude fiscale (30 Mds€/an). Fin des rulings abusifs. L'argent existe. Vous refusez d'aller le chercher.</p>
+        </div>
+        <div class="exigence">
+            <span class="exigence-num">IV</span>
+            <p class="exigence-texte"><strong>TRANSPARENCE TOTALE</strong> — Publication de tous mandats, rémunérations, jetons. Fin de l'opacité des intercommunales. Interdiction du cumul au-delà de 2 mandats.</p>
+        </div>
+        <div class="exigence">
+            <span class="exigence-num">V</span>
+            <p class="exigence-texte"><strong>RECONNAISSANCE DE L'ECP</strong> — Permettre aux 978.000 inactifs contraints de contribuer SANS perdre leurs droits sociaux. Ruling fiscal favorable. Fin du piège institutionnel.</p>
+        </div>
+    </div>
+
+    <div class="deadline">
+        <h3>📅 ÉCHÉANCE : ARRÊT COUR CONSTITUTIONNELLE — FIN 2026</h3>
+        <p>
+            Si la Cour annule vos mesures, vous devrez indemniser rétroactivement les exclus. Chaos budgétaire garanti. Vous n'avez pas de plan B.<br><br>
+            <strong>D'ici là, chaque jour qui passe :</strong> nos recours s'accumulent, les CPAS s'effondrent, vos députés vacillent, notre alternative se construit.<br><br>
+            <em style="color: var(--matrix);">Tick. Tock. Tick. Tock.</em>
+        </p>
+    </div>
+</section>
+
+<!-- RENAISSANCE -->
+<section class="renaissance">
+    <h2>🌅 RENAISSANCE 3.0 — LA MARCHE IMPÉRIALE</h2>
+    <p class="renaissance-intro">
+        Pendant que vous vous accrochez à un système moribond, nous construisons déjà l'alternative. 
+        La marche est en route. Elle est silencieuse, méthodique, et inexorable.
+    </p>
+    <div class="renaissance-grid">
+        <div class="renaissance-item">
+            <h3>🔍 INTELLIGENCE CIVILE</h3>
+            <p>Veille citoyenne, analyse critique, documentation collaborative. L'information n'est plus votre monopole.</p>
+        </div>
+        <div class="renaissance-item">
+            <h3>🛡️ SOUVERAINETÉ NUMÉRIQUE</h3>
+            <p>Protocole Solid, données personnelles, outils libres. Nous ne dépendons plus de vos systèmes.</p>
+        </div>
+        <div class="renaissance-item">
+            <h3>💰 ÉCONOMIE CONTRIBUTIVE</h3>
+            <p>ECP : transformer les dépenses passives en investissement actif. Valoriser la contribution sans punir.</p>
+        </div>
+        <div class="renaissance-item">
+            <h3>🏛️ CONTRE-INSTITUTION</h3>
+            <p>Infrastructure parallèle : éducation permanente, observatoires, délibération citoyenne.</p>
+        </div>
+        <div class="renaissance-item">
+            <h3>🌐 INTEROPÉRABILITÉ</h3>
+            <p>Standard FHIR santé/social, Git Scraping, Decidim. Les silos de données tombent.</p>
+        </div>
+        <div class="renaissance-item">
+            <h3>📚 MÉMOIRE COLLECTIVE</h3>
+            <p>Documentation open source de tout : vos échecs, nos alternatives. Rien ne sera oublié.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="signature">
+    <div class="manifeste">
+        <p><strong>NOUS NE DEMANDONS PAS.</strong><br>Nous documentons. Nous contestons. Nous construisons.</p>
+        <p><strong>NOUS NE MANIFESTONS PAS.</strong><br>Nous saturons vos tribunaux. Nous fissurons vos coalitions. Nous rendons votre système obsolète.</p>
+        <p><strong>NOUS N'ATTENDONS RIEN DE VOUS.</strong><br>L'alternative est déjà en marche. Vous pouvez rejoindre ou être dépassés.</p>
+        <p><em>La question n'est plus de savoir SI le système change, mais QUAND.</em></p>
+    </div>
+
+    <div class="final-msg">
+        <span class="dead">ARIZONA</span> IS DEAD — <span class="alive">RENAISSANCE</span> IS ALIVE
+    </div>
+
+    <p class="hashtags">#Ordre66 #MortArizona #Renaissance30 #GameOverPartyOn #Ouaisfieu</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-left">
+        <div class="footer-item">
+            <span class="footer-label">PROJET:</span>
+            <span class="footer-value">OUAISFIEU</span>
+        </div>
+        <div class="footer-item">
+            <span class="footer-label">TYPE:</span>
+            <span class="footer-value">CONTRE-INSTITUTION</span>
+        </div>
+        <div class="footer-item">
+            <span class="footer-label">STATUS:</span>
+            <span class="footer-value">ORDRE 66 EXÉCUTÉ</span>
+        </div>
+        <div class="footer-item">
+            <span class="footer-label">LICENCE:</span>
+            <span class="footer-value">CC BY-NC 4.0</span>
+        </div>
+    </div>
+    <div class="footer-logo">Ouaiefieu</div>
+</footer>
+
+</div>
+</body>
+</html>
